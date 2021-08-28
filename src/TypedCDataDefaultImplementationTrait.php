@@ -124,6 +124,7 @@ trait TypedCDataDefaultImplementationTrait
     public static function newCData(): CData
     {
         $typename = static::getCTypeName();
+        /** @var CData $cdata */
         $cdata = static::getFFI()->new($typename);
         $type = static::getFFI()->type(
             $typename

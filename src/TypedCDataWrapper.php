@@ -55,33 +55,45 @@ final class TypedCDataWrapper
                     return $typed_c_data_array->toCData($toCData);
                 };
             } elseif ($parameter->isPassedByReference()) {
-                $input_converters[] = function (CData $cdata): CData {
-                    /** @var \FFI\CDataArray $cdata */
-                    return $cdata[0];
-                };
-                $outout_converters[] =
-                    /**
-                      * @param mixed $value
-                      * @param \FFI\CDataArray $toCData
-                      * @return mixed
-                      */
-                    function ($value, CData $toCData) {
-                        /** @psalm-suppress MixedAssignment */
-                        return $toCData[0] = $value;
+                $type = $parameter->getType();
+                if ($type instanceof \ReflectionNamedType and $type->getName() === 'string') {
+                    $input_converters[] = function (CData $cdata): string {
+                        return \FFI::string($cdata);
                     };
+                    $outout_converters[] =
+                        function (string $value, CData $toCData): CData {
+                            \FFI::memcpy($toCData, $value, strlen($value));
+                            return $toCData;
+                        };
+                } else {
+                    $input_converters[] = function (CData $cdata): CData {
+                        /** @var \FFI\CDataArray $cdata */
+                        return $cdata[0];
+                    };
+                    $outout_converters[] =
+                        /**
+                         * @param mixed $value
+                         * @param \FFI\CDataArray $toCData
+                         * @return mixed
+                         */
+                        function ($value, CData $toCData) {
+                            /** @psalm-suppress MixedAssignment */
+                            return $toCData[0] = $value;
+                        };
+                }
             } else {
                 $input_converters[] =
                     /**
-                      * @param mixed $data
-                      * @return mixed
-                      */
+                     * @param mixed $data
+                     * @return mixed
+                     */
                     fn ($data) => $data;
                 $outout_converters[] =
                     /**
-                      * @param mixed $_1
-                      * @param mixed $_2
-                      * @return mixed
-                      */
+                     * @param mixed $_1
+                     * @param mixed $_2
+                     * @return mixed
+                     */
                     fn ($_1, $_2) => $_1;
             }
         }
@@ -91,20 +103,29 @@ final class TypedCDataWrapper
             function (...$args) use ($input_converters, $outout_converters, $callable) {
                 $new_args = [];
                 foreach ($input_converters as $key => $converter) {
+                    if (is_null($args[$key])) {
+                        $new_args[$key] = $args[$key];
+                        continue;
+                    }
                     /**
-                      * @psalm-suppress MixedArgument
-                      * @psalm-suppress MixedAssignment
-                      */
+                     * @psalm-suppress MixedArgument
+                     * @psalm-suppress MixedAssignment
+                     */
                     $new_args[$key] = $converter($args[$key]);
                 }
                 /** @psalm-suppress MixedAssignment */
                 $result = $callable(...$new_args);
                 foreach ($outout_converters as $key => $converter) {
+                    if (is_null($new_args[$key])) {
+                        $args[$key] = $new_args[$key];
+                        continue;
+                    }
+                    assert(!is_null($args[$key]));
                     /**
-                      * @psalm-suppress PossiblyInvalidArgument
-                      * @psalm-suppress MixedArgument
-                      * @psalm-suppress MixedAssignment
-                      */
+                     * @psalm-suppress PossiblyInvalidArgument
+                     * @psalm-suppress MixedArgument
+                     * @psalm-suppress MixedAssignment
+                     */
                     $args[$key] = $converter($new_args[$key], $args[$key]);
                 }
                 if ($result instanceof TypedCDataInterface) {

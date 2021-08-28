@@ -35,6 +35,21 @@ class TypedCDataWrapperTest extends TestCase
         $this->assertSame(123, $test_type_cdata->int_field);
     }
 
+    public function testCreateWrapperNullableStringPassByRef()
+    {
+        $test_class = new class () {
+            public function testMethod(?string &$test): void
+            {
+                $test = 'test';
+            }
+        };
+        $wrapper_creator = new TypedCDataWrapper();
+        $wrapper = $wrapper_creator->createWrapper([$test_class, 'testMethod']);
+        $buffer = \FFI::new('char[100]');
+        $wrapper($buffer);
+        $this->assertSame('test', \FFI::string($buffer));
+    }
+
     public function testCreateWrapperTypedCDataArray()
     {
         $test_class = new class ($this) {

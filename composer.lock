@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc73bcf9ecaa259d88b3821332612b24",
+    "content-hash": "1836039472387cff6628c83ca3443772",
     "packages": [
         {
             "name": "nikic/php-parser",
@@ -68,12 +68,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "ea0b17460ec38e20d7eb64e7ec49b5d44af5d28c"
+                "reference": "fac86158ffc7392e49636f77e63684c026df43b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/ea0b17460ec38e20d7eb64e7ec49b5d44af5d28c",
-                "reference": "ea0b17460ec38e20d7eb64e7ec49b5d44af5d28c",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/fac86158ffc7392e49636f77e63684c026df43b8",
+                "reference": "fac86158ffc7392e49636f77e63684c026df43b8",
                 "shasum": ""
             },
             "require": {
@@ -108,22 +108,22 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/0.5.5"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/0.5.6"
             },
-            "time": "2021-06-11T13:24:46+00:00"
+            "time": "2021-08-31T08:08:22+00:00"
         },
         {
             "name": "sj-i/phpdoc-type-reader",
-            "version": "v0.1.0",
+            "version": "v0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sj-i/phpdoc-type-reader.git",
-                "reference": "7ce70ba94df2bb34eb98b7ed7e5c17bbbec0ed3a"
+                "reference": "2cf8b5991ef4921f86bdc2c1f1db3d98df98ddc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sj-i/phpdoc-type-reader/zipball/7ce70ba94df2bb34eb98b7ed7e5c17bbbec0ed3a",
-                "reference": "7ce70ba94df2bb34eb98b7ed7e5c17bbbec0ed3a",
+                "url": "https://api.github.com/repos/sj-i/phpdoc-type-reader/zipball/2cf8b5991ef4921f86bdc2c1f1db3d98df98ddc7",
+                "reference": "2cf8b5991ef4921f86bdc2c1f1db3d98df98ddc7",
                 "shasum": ""
             },
             "require": {
@@ -132,12 +132,12 @@
                 "phpstan/phpdoc-parser": "0.5.x-dev"
             },
             "require-dev": {
-                "mockery/mockery": "^1.4",
+                "mockery/mockery": "1.4.3",
                 "php-coveralls/php-coveralls": "9999999-dev",
-                "phpunit/phpunit": "^9.0",
-                "psalm/plugin-mockery": "^0.7.0",
-                "squizlabs/php_codesniffer": "^3.5",
-                "vimeo/psalm": "^4.6"
+                "phpunit/phpunit": "9.5.9",
+                "psalm/plugin-mockery": "0.9.0",
+                "squizlabs/php_codesniffer": "3.6.0",
+                "vimeo/psalm": "4.9.3"
             },
             "type": "library",
             "autoload": {
@@ -164,9 +164,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sj-i/phpdoc-type-reader/issues",
-                "source": "https://github.com/sj-i/phpdoc-type-reader/tree/v0.1.0"
+                "source": "https://github.com/sj-i/phpdoc-type-reader/tree/v0.1.1"
             },
-            "time": "2021-08-26T04:41:16+00:00"
+            "time": "2021-09-02T04:27:00+00:00"
         }
     ],
     "packages-dev": [
